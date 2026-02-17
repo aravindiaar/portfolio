@@ -12,6 +12,8 @@ export const profile = pgTable("profile", {
   githubUrl: text("github_url"),
   nugetUrl: text("nuget_url"),
   linkedinUrl: text("linkedin_url"),
+  email: text("email"),
+  location: text("location"),
 });
 
 export const experiences = pgTable("experiences", {

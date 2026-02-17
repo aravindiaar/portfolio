@@ -60,12 +60,14 @@ async function seedDatabase() {
   await storage.createProfile({
     name: "Aravind Anbalagan",
     title: "Senior Backend & DevOps Engineer (.NET | Azure)",
-    bio: "Senior Backend & DevOps Engineer with 9+ years of continuous full-time experience delivering enterprise-grade software solutions. Strong background in C#, .NET MVC/Web API, ETL systems, API development, system monitoring, automation, and AI-enabled document processing. Based in Hamilton, New Zealand. Contact: aravindiaar@gmail.com",
+    bio: "Senior Backend & DevOps Engineer with 9+ years of continuous full-time experience delivering enterprise-grade software solutions. Strong background in C#, .NET MVC/Web API, ETL systems, API development, system monitoring, automation, and AI-enabled document processing.",
     imageUrl: "/static/profile.jpeg",
     resumeUrl: "#",
     githubUrl: "https://github.com/aravindiaar",
     nugetUrl: "https://www.nuget.org/profiles/Aravindiaar",
-    linkedinUrl: "https://www.linkedin.com/in/aravindiaar/"
+    linkedinUrl: "https://www.linkedin.com/in/aravindiaar/",
+    email: "aravindiaar@gmail.com",
+    location: "Hamilton, New Zealand"
   });
 
   await storage.createExperience({
