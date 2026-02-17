@@ -60,7 +60,7 @@ async function seedDatabase() {
   await storage.createProfile({
     name: "Aravind Anbalagan",
     title: "Senior Backend & DevOps Engineer (.NET | Azure)",
-    bio: "Senior Backend & DevOps Engineer with 9+ years of continuous full-time experience delivering enterprise-grade software solutions. Strong background in C#, .NET MVC/Web API, ETL systems, API development, system monitoring, automation, and AI-enabled document processing. Proven ability to support long-running production systems, improve performance, and work closely with business stakeholders.",
+    bio: "Senior Backend & DevOps Engineer with 9+ years of continuous full-time experience delivering enterprise-grade software solutions. Strong background in C#, .NET MVC/Web API, ETL systems, API development, system monitoring, automation, and AI-enabled document processing. Based in Hamilton, New Zealand. Contact: aravindiaar@gmail.com",
     imageUrl: "/static/profile.jpeg",
     resumeUrl: "#"
   });
