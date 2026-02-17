@@ -1,0 +1,101 @@
+import { z } from 'zod';
+export * from './schema';
+import { 
+  insertProfileSchema, 
+  insertExperienceSchema, 
+  insertEducationSchema, 
+  insertSkillSchema, 
+  insertProjectSchema, 
+  insertMessageSchema,
+  profile,
+  experiences,
+  education,
+  skills,
+  projects,
+  messages
+} from './schema';
+
+export const errorSchemas = {
+  validation: z.object({
+    message: z.string(),
+    field: z.string().optional(),
+  }),
+  notFound: z.object({
+    message: z.string(),
+  }),
+  internal: z.object({
+    message: z.string(),
+  }),
+};
+
+export const api = {
+  profile: {
+    get: {
+      method: 'GET' as const,
+      path: '/api/profile' as const,
+      responses: {
+        200: z.custom<typeof profile.$inferSelect>(),
+        404: errorSchemas.notFound,
+      },
+    }
+  },
+  experiences: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/experiences' as const,
+      responses: {
+        200: z.array(z.custom<typeof experiences.$inferSelect>()),
+      },
+    }
+  },
+  education: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/education' as const,
+      responses: {
+        200: z.array(z.custom<typeof education.$inferSelect>()),
+      },
+    }
+  },
+  skills: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/skills' as const,
+      responses: {
+        200: z.array(z.custom<typeof skills.$inferSelect>()),
+      },
+    }
+  },
+  projects: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/projects' as const,
+      responses: {
+        200: z.array(z.custom<typeof projects.$inferSelect>()),
+      },
+    }
+  },
+  messages: {
+    create: {
+      method: 'POST' as const,
+      path: '/api/messages' as const,
+      input: insertMessageSchema,
+      responses: {
+        200: z.custom<typeof messages.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    }
+  }
+};
+
+export function buildUrl(path: string, params?: Record<string, string | number>): string {
+  let url = path;
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      if (url.includes(`:${key}`)) {
+        url = url.replace(`:${key}`, String(value));
+      }
+    });
+  }
+  return url;
+}
