@@ -1,4 +1,3 @@
-import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { 
   User, 
@@ -8,68 +7,62 @@ import {
   FolderGit2, 
   Mail,
   Menu,
-  X
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useProfile } from "@/hooks/use-portfolio";
 
 const navItems = [
-  { label: "About", href: "/", icon: User },
-  { label: "Experience", href: "/experience", icon: Briefcase },
-  { label: "Education", href: "/education", icon: GraduationCap },
-  { label: "Skills", href: "/skills", icon: Code },
-  { label: "Projects", href: "/projects", icon: FolderGit2 },
-  { label: "Contact", href: "/contact", icon: Mail },
+  { label: "About", href: "#about", icon: User },
+  { label: "Experience", href: "#experience", icon: Briefcase },
+  { label: "Education", href: "#education", icon: GraduationCap },
+  { label: "Skills", href: "#skills", icon: Code },
+  { label: "Projects", href: "#projects", icon: FolderGit2 },
+  { label: "Contact", href: "#contact", icon: Mail },
 ];
 
 export function Sidebar() {
-  const [location] = useLocation();
   const [open, setOpen] = useState(false);
-  const { data: profile } = useProfile();
 
-  // Close mobile menu on navigation
-  useEffect(() => {
+  const handleClick = () => {
     setOpen(false);
-  }, [location]);
+  };
 
   const NavContent = () => (
     <div className="flex flex-col h-full py-6 md:py-8">
       <div className="px-6 mb-8">
         <h1 className="text-2xl font-serif font-bold text-primary tracking-tight">
-          {profile?.name || "Portfolio"}
+          Aravind Anbalagan
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          {profile?.title || "Professional"}
+          Senior Backend & DevOps Engineer (.NET | Azure)
         </p>
       </div>
 
       <nav className="flex-1 px-4 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = location === item.href;
           return (
-            <Link key={item.href} href={item.href}>
-              <div
-                className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200 cursor-pointer group",
-                  isActive 
-                    ? "bg-primary text-primary-foreground shadow-md" 
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                )}
-              >
-                <Icon className={cn("w-5 h-5", isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground")} />
-                <span className="font-medium text-sm">{item.label}</span>
-              </div>
-            </Link>
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={handleClick}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200 cursor-pointer group",
+                "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              )}
+              data-testid={`nav-${item.label.toLowerCase()}`}
+            >
+              <Icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground" />
+              <span className="font-medium text-sm">{item.label}</span>
+            </a>
           );
         })}
       </nav>
 
       <div className="px-6 mt-auto">
         <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} {profile?.name?.split(' ')[0] || 'User'}.
+          {new Date().getFullYear()} Aravind Anbalagan.
           <br />All rights reserved.
         </p>
       </div>
@@ -78,17 +71,15 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 border-r border-border bg-background/50 backdrop-blur-xl z-50">
         <NavContent />
       </aside>
 
-      {/* Mobile Header & Sheet */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/80 backdrop-blur-md z-50 flex items-center justify-between px-4">
-        <span className="font-serif font-bold text-lg">{profile?.name || "Portfolio"}</span>
+        <span className="font-serif font-bold text-lg">Aravind Anbalagan</span>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" data-testid="button-mobile-menu">
               <Menu className="w-5 h-5" />
             </Button>
           </SheetTrigger>
