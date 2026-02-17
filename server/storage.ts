@@ -28,6 +28,8 @@ export interface IStorage {
   createProject(project: InsertProject): Promise<Project>;
   
   createMessage(message: InsertMessage): Promise<Message>;
+  
+  clearAll(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -68,8 +70,8 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(skills);
   }
 
-  async createSkill(insertSkill: InsertSkill): Promise<Skill> {
-    const [result] = await db.insert(skills).values(insertSkill).returning();
+  async createSkill(skill: InsertSkill): Promise<Skill> {
+    const [result] = await db.insert(skills).values(skill).returning();
     return result;
   }
 
@@ -77,14 +79,23 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(projects);
   }
 
-  async createProject(insertProject: InsertProject): Promise<Project> {
-    const [result] = await db.insert(projects).values(insertProject).returning();
+  async createProject(project: InsertProject): Promise<Project> {
+    const [result] = await db.insert(projects).values(project).returning();
     return result;
   }
 
   async createMessage(insertMessage: InsertMessage): Promise<Message> {
     const [result] = await db.insert(messages).values(insertMessage).returning();
     return result;
+  }
+
+  async clearAll(): Promise<void> {
+    await db.delete(messages);
+    await db.delete(projects);
+    await db.delete(skills);
+    await db.delete(education);
+    await db.delete(experiences);
+    await db.delete(profile);
   }
 }
 
