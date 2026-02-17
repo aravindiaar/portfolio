@@ -48,7 +48,7 @@ export async function registerRoutes(
 
   // Re-seed with new user data
   const existingProfile = await storage.getProfile();
-  if (!existingProfile || existingProfile.name !== "Aravind Anbalagan") {
+  if (!existingProfile || existingProfile.name !== "Aravind Anbalagan" || !existingProfile.email || !existingProfile.location) {
     await storage.clearAll();
     await seedDatabase();
   }
