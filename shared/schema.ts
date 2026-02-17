@@ -9,6 +9,9 @@ export const profile = pgTable("profile", {
   bio: text("bio").notNull(),
   imageUrl: text("image_url"),
   resumeUrl: text("resume_url"),
+  githubUrl: text("github_url"),
+  nugetUrl: text("nuget_url"),
+  linkedinUrl: text("linkedin_url"),
 });
 
 export const experiences = pgTable("experiences", {
