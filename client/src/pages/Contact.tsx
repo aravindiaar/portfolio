@@ -73,8 +73,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-primary-foreground/60 mb-1">Email</p>
-                  <a href={`mailto:hello@example.com`} className="font-medium hover:underline">
-                    hello@example.com
+                  <a href={`mailto:${profile?.email || "hello@example.com"}`} className="font-medium hover:underline">
+                    {profile?.email || "hello@example.com"}
                   </a>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-primary-foreground/60 mb-1">Location</p>
-                  <p className="font-medium">San Francisco, CA</p>
+                  <p className="font-medium">{profile?.location || "San Francisco, CA"}</p>
                 </div>
               </div>
             </div>
