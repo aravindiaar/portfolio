@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Aravind Anbalagan - Senior Backend & DevOps Engineer</title>
+  <meta name="description" content="Portfolio of Aravind Anbalagan - Senior Backend & DevOps Engineer with 9+ years of experience in C#, .NET, Azure, and enterprise solutions. Based in Hamilton, New Zealand.">
+  <meta property="og:title" content="Aravind Anbalagan - Senior Backend & DevOps Engineer">
+  <meta property="og:description" content="9+ years of experience in C#, .NET, Azure, and enterprise solutions. Based in Hamilton, New Zealand.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --bg: hsl(210 20% 98%);
+      --fg: hsl(222 47% 11%);
+      --primary: hsl(216 30% 18%);
+      --primary-fg: hsl(210 40% 98%);
+      --secondary: hsl(210 20% 94%);
+      --muted: hsl(215.4 16.3% 46.9%);
+      --border: hsl(214.3 31.8% 91.4%);
+      --card: hsl(0 0% 100%);
+      --radius: 0.5rem;
+    }
+
+    ::selection { background: hsla(216, 30%, 18%, 0.1); color: var(--primary); }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: hsla(215, 16%, 47%, 0.2); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: hsla(215, 16%, 47%, 0.4); }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed; left: 0; top: 0; width: 256px; height: 100vh;
+      border-right: 1px solid var(--border);
+      background: hsla(210, 20%, 98%, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 50;
+      display: flex; flex-direction: column;
+      padding: 2rem 0;
+    }
+
+    .sidebar-header { padding: 0 1.5rem; margin-bottom: 2rem; }
+    .sidebar-header h1 { font-size: 1.5rem; color: var(--primary); letter-spacing: -0.025em; }
+    .sidebar-header p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+
+    .sidebar nav { flex: 1; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .sidebar nav a {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1rem; border-radius: var(--radius);
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .sidebar nav a:hover { background: var(--secondary); color: var(--fg); }
+    .sidebar nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .sidebar-footer { padding: 0 1.5rem; margin-top: auto; }
+    .sidebar-footer p { font-size: 0.75rem; color: var(--muted); }
+
+    /* Mobile header */
+    .mobile-header {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; height: 4rem;
+      border-bottom: 1px solid var(--border);
+      background: hsla(210, 20%, 98%, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 50;
+      align-items: center; justify-content: space-between;
+      padding: 0 1rem;
+    }
+    .mobile-header span { font-family: var(--font-serif); font-weight: 700; font-size: 1.125rem; }
+
+    .menu-btn {
+      background: none; border: none; cursor: pointer; padding: 0.5rem;
+      color: var(--fg); border-radius: var(--radius);
+    }
+    .menu-btn:hover { background: var(--secondary); }
+    .menu-btn svg { width: 20px; height: 20px; }
+
+    /* Mobile overlay */
+    .mobile-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 60; opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-overlay.active { display: block; opacity: 1; }
+
+    .mobile-nav {
+      position: fixed; left: -264px; top: 0; width: 260px; height: 100vh;
+      background: var(--bg); z-index: 70;
+      display: flex; flex-direction: column; padding: 2rem 0;
+      transition: left 0.3s ease;
+    }
+    .mobile-nav.active { left: 0; }
+    .mobile-nav .sidebar-header,
+    .mobile-nav nav,
+    .mobile-nav .sidebar-footer { /* same styles as sidebar */ }
+    .mobile-nav nav { flex: 1; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .mobile-nav nav a {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1rem; border-radius: var(--radius);
+      font-size: 0.875rem; font-weight: 500; color: var(--muted); transition: all 0.2s;
+    }
+    .mobile-nav nav a:hover { background: var(--secondary); color: var(--fg); }
+    .mobile-nav nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .mobile-nav .sidebar-header { padding: 0 1.5rem; margin-bottom: 2rem; }
+    .mobile-nav .sidebar-header h1 { font-size: 1.5rem; color: var(--primary); font-family: var(--font-serif); font-weight: 700; }
+    .mobile-nav .sidebar-header p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+    .mobile-nav .sidebar-footer { padding: 0 1.5rem; margin-top: auto; }
+    .mobile-nav .sidebar-footer p { font-size: 0.75rem; color: var(--muted); }
+
+    /* Main */
+    .main { margin-left: 256px; min-height: 100vh; }
+    .main-inner { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+    section { scroll-margin-top: 6rem; padding: 4rem 0; border-bottom: 1px solid hsla(214, 32%, 91%, 0.5); }
+    section:last-child { border-bottom: none; }
+
+    .section-header { margin-bottom: 3rem; }
+    .section-header h2 { font-size: clamp(1.875rem, 4vw, 2.25rem); color: var(--fg); margin-bottom: 0.75rem; }
+    .section-header p { font-size: 1.125rem; color: var(--muted); }
+    .section-header .bar { margin-top: 1rem; height: 4px; width: 4rem; background: var(--primary); border-radius: 9999px; }
+
+    /* About */
+    .about-grid { display: flex; flex-direction: row; gap: 3rem; align-items: flex-start; }
+    .about-text { flex: 1; }
+    .about-text .greeting { color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .about-text h1 { font-size: clamp(2.25rem, 5vw, 3.75rem); color: var(--fg); margin-bottom: 1rem; }
+    .about-text .title { font-size: clamp(1.25rem, 3vw, 1.5rem); color: var(--muted); font-weight: 300; margin-bottom: 2rem; }
+    .about-text .bio { font-size: 1.125rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+
+    .about-photo {
+      width: 240px; height: 240px; flex-shrink: 0; position: relative;
+    }
+    .about-photo .bg-circle {
+      position: absolute; inset: 0; background: hsla(216, 30%, 18%, 0.05);
+      border-radius: 50%; transform: translate(16px, 16px);
+    }
+    .about-photo img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+      border: 4px solid var(--bg); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      position: relative; z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 2rem; border-radius: 9999px;
+      font-size: 0.875rem; font-weight: 500;
+      background: var(--primary); color: var(--primary-fg);
+      border: none; cursor: pointer; transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: var(--radius);
+      border: none; background: transparent; cursor: pointer;
+      color: var(--muted); transition: all 0.2s;
+    }
+    .icon-btn:hover { background: var(--secondary); color: var(--fg); }
+    .icon-btn svg { width: 20px; height: 20px; }
+
+    .social-links { display: flex; gap: 0.5rem; padding-top: 2rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+
+    /* Experience */
+    .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 0.75rem; padding-bottom: 3rem; }
+    .timeline-item { position: relative; padding-left: 2.5rem; }
+    .timeline-dot {
+      position: absolute; left: -9px; top: 0;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--primary); border: 4px solid var(--bg);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .card {
+      padding: 1.5rem 2rem;
+      border: 1px solid hsla(214, 32%, 91%, 0.5);
+      border-radius: var(--radius);
+      background: hsla(0, 0%, 100%, 0.5);
+      backdrop-filter: blur(4px);
+    }
+    .card-header-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.25rem; font-weight: 700; color: var(--fg); }
+    .card .company { display: flex; align-items: center; gap: 0.5rem; color: var(--primary); font-weight: 500; margin-top: 0.25rem; font-family: var(--font-sans); font-size: 0.875rem; }
+    .card .company svg { width: 16px; height: 16px; }
+    .period-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.875rem; color: var(--muted);
+      background: hsla(210, 20%, 94%, 0.5);
+      padding: 0.25rem 0.75rem; border-radius: 9999px;
+      white-space: nowrap;
+    }
+    .period-badge svg { width: 14px; height: 14px; }
+    .card .description { color: var(--muted); line-height: 1.8; white-space: pre-line; font-size: 0.9375rem; }
+
+    /* Education */
+    .edu-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .edu-card {
+      background: var(--card); border: 1px solid hsla(214, 32%, 91%, 0.5);
+      border-radius: var(--radius); padding: 2rem; position: relative; overflow: hidden;
+    }
+    .edu-card .watermark {
+      position: absolute; top: 0; right: 0; padding: 2rem;
+      opacity: 0.05; transition: opacity 0.2s;
+    }
+    .edu-card:hover .watermark { opacity: 0.1; }
+    .edu-card .watermark svg { width: 96px; height: 96px; }
+    .edu-card h3 { font-size: 1.5rem; color: var(--fg); margin-bottom: 0.5rem; position: relative; z-index: 1; }
+    .edu-card p { font-size: 1.125rem; color: var(--muted); font-weight: 500; position: relative; z-index: 1; }
+
+    /* Skills */
+    .skill-group { margin-bottom: 3rem; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group h3 {
+      font-size: 1.25rem; font-weight: 700; color: var(--fg);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-serif);
+    }
+    .skill-group h3::before {
+      content: ''; display: block; width: 2rem; height: 2px;
+      background: hsla(216, 30%, 18%, 0.2); border-radius: 9999px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 0.5rem 1rem; border-radius: var(--radius);
+      font-size: 0.875rem; font-weight: 500;
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--fg);
+    }
+
+    /* Projects */
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .project-card {
+      display: flex; flex-direction: column;
+      background: var(--card); border: 1px solid hsla(214, 32%, 91%, 0.5);
+      border-radius: var(--radius); overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .project-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .project-card-header { padding: 1.5rem 1.5rem 0; }
+    .project-card-header .top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .project-icon { background: hsla(216, 30%, 18%, 0.05); padding: 0.75rem; border-radius: var(--radius); color: var(--primary); }
+    .project-icon svg { width: 24px; height: 24px; }
+    .duration-badge {
+      font-size: 0.75rem; padding: 0.25rem 0.75rem;
+      border: 1px solid var(--border); border-radius: 9999px;
+      color: var(--muted); white-space: nowrap;
+    }
+    .project-card h3 { font-size: 1.375rem; color: var(--fg); margin-bottom: 0.5rem; }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 0.5rem; }
+    .tech-tag {
+      font-size: 0.75rem; font-weight: 400; color: var(--muted);
+      background: hsla(210, 20%, 94%, 0.3); border: 1px solid var(--border);
+      padding: 0.125rem 0.5rem; border-radius: 9999px;
+    }
+    .project-card-body { padding: 1rem 1.5rem 1.5rem; flex: 1; }
+    .project-card-body p { font-size: 0.9375rem; color: var(--muted); line-height: 1.7; }
+
+    /* Contact */
+    .contact-card {
+      max-width: 36rem; padding: 2rem;
+      background: var(--primary); color: var(--primary-fg);
+      border-radius: var(--radius);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15);
+    }
+    .contact-card h3 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary-fg); }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-icon {
+      padding: 0.5rem; border-radius: var(--radius);
+      background: hsla(210, 40%, 98%, 0.1);
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 20px; height: 20px; }
+    .contact-item .label { font-size: 0.875rem; opacity: 0.6; margin-bottom: 0.125rem; }
+    .contact-item a, .contact-item .value { font-weight: 500; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .mobile-header { display: flex; }
+      .main { margin-left: 0; padding-top: 4rem; }
+      .main-inner { padding: 0 1rem; }
+      .about-grid { flex-direction: column-reverse; align-items: center; }
+      .about-photo { width: 192px; height: 192px; }
+      .about-text { text-align: center; }
+      .about-text .social-links { justify-content: center; }
+      .about-text .btn-wrap { display: flex; justify-content: center; }
+      .project-grid { grid-template-columns: 1fr; }
+      .card-header-row { flex-direction: column; }
+      section { padding: 3rem 0; }
+    }
+
+    @media (max-width: 480px) {
+      .about-photo { width: 160px; height: 160px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .about-photo { width: 200px; height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Desktop Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>Aravind Anbalagan</h1>
+      <p>Senior Backend & DevOps Engineer (.NET | Azure)</p>
+    </div>
+    <nav>
+      <a href="#about">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>About</span>
+      </a>
+      <a href="#experience">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Experience</span>
+      </a>
+      <a href="#education">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg>
+        <span>Education</span>
+      </a>
+      <a href="#skills">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span>Skills</span>
+      </a>
+      <a href="#projects">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+        <span>Projects</span>
+      </a>
+      <a href="#contact">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span>Contact</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <p>&copy; 2026 Aravind Anbalagan.<br>All rights reserved.</p>
+    </div>
+  </aside>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <span>Aravind Anbalagan</span>
+    <button class="menu-btn" onclick="toggleMobileMenu()" aria-label="Open menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="sidebar-header">
+      <h1>Aravind Anbalagan</h1>
+      <p>Senior Backend & DevOps Engineer (.NET | Azure)</p>
+    </div>
+    <nav>
+      <a href="#about" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>About</span>
+      </a>
+      <a href="#experience" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Experience</span>
+      </a>
+      <a href="#education" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg>
+        <span>Education</span>
+      </a>
+      <a href="#skills" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span>Skills</span>
+      </a>
+      <a href="#projects" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+        <span>Projects</span>
+      </a>
+      <a href="#contact" onclick="toggleMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span>Contact</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <p>&copy; 2026 Aravind Anbalagan.<br>All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="main-inner">
+
+      <!-- About Section -->
+      <section id="about">
+        <div class="about-grid">
+          <div class="about-text">
+            <p class="greeting">Hello, I'm</p>
+            <h1 data-testid="text-name">Aravind Anbalagan</h1>
+            <p class="title" data-testid="text-title">Senior Backend & DevOps Engineer (.NET | Azure)</p>
+            <p class="bio" data-testid="text-bio">Senior Backend & DevOps Engineer with 9+ years of continuous full-time experience delivering enterprise-grade software solutions. Strong background in C#, .NET MVC/Web API, ETL systems, API development, system monitoring, automation, and AI-enabled document processing. Proven ability to support long-running production systems, improve performance, and work closely with business stakeholders.</p>
+            <div class="btn-wrap">
+              <a href="#projects" class="btn" data-testid="button-view-work">
+                View Work
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+            <div class="social-links">
+              <a href="https://github.com/aravindiaar" target="_blank" rel="noopener noreferrer" class="icon-btn" data-testid="link-github" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/aravindiaar/" target="_blank" rel="noopener noreferrer" class="icon-btn" data-testid="link-linkedin" title="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+              <a href="https://www.nuget.org/profiles/Aravindiaar" target="_blank" rel="noopener noreferrer" class="icon-btn" data-testid="link-nuget" title="NuGet">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="about-photo">
+            <div class="bg-circle"></div>
+            <img src="profile.jpg" alt="Aravind Anbalagan" data-testid="img-profile">
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience">
+        <div class="section-header">
+          <h2>Work Experience</h2>
+          <p>My professional journey and career milestones.</p>
+          <div class="bar"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="card">
+              <div class="card-header-row">
+                <div>
+                  <h3 data-testid="text-position-1">Senior Software Engineer & DevOps Engineer</h3>
+                  <div class="company">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                    DSRC, Chennai, India
+                  </div>
+                </div>
+                <span class="period-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                  March 2016 – Present
+                </span>
+              </div>
+              <p class="description">Accumulated over 9 years of hands-on industry experience delivering backend, integration, and automation solutions across multiple enterprise domains.
+
+Designed and developed backend systems using C#, .NET MVC, ASP.NET Web API, and REST APIs supporting internal and customer-facing applications.
+
+Owned full application lifecycle including development, deployment, monitoring, and production support.
+
+Led performance improvement initiatives, reducing API response times and improving system stability across projects.
+
+Built CI/CD pipelines and automated deployments using Azure DevOps, Jenkins, Docker, and scripting.
+
+Actively supported production environments, handling incidents, root-cause analysis, and long-term fixes.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education">
+        <div class="section-header">
+          <h2>Education</h2>
+          <p>Academic background and qualifications.</p>
+          <div class="bar"></div>
+        </div>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="watermark">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg>
+            </div>
+            <h3 data-testid="text-degree-1">Bachelor of Engineering – Computer Science</h3>
+            <p>India</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills">
+        <div class="section-header">
+          <h2>Technical Skills</h2>
+          <p>Languages, frameworks, and tools I work with.</p>
+          <div class="bar"></div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Backend & APIs</h3>
+          <div class="skill-tags">
+            <span class="badge">C#</span>
+            <span class="badge">.NET</span>
+            <span class="badge">ASP.NET MVC</span>
+            <span class="badge">ASP.NET Web API</span>
+            <span class="badge">RESTful Services</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Scripting & Services</h3>
+          <div class="skill-tags">
+            <span class="badge">Node.js</span>
+            <span class="badge">Python</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="badge">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Databases</h3>
+          <div class="skill-tags">
+            <span class="badge">Microsoft SQL Server</span>
+            <span class="badge">PostgreSQL</span>
+            <span class="badge">MySQL</span>
+            <span class="badge">Redis</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Cloud & DevOps</h3>
+          <div class="skill-tags">
+            <span class="badge">Microsoft Azure</span>
+            <span class="badge">Azure DevOps</span>
+            <span class="badge">Docker</span>
+            <span class="badge">Jenkins</span>
+            <span class="badge">CI/CD</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Engineering Practices</h3>
+          <div class="skill-tags">
+            <span class="badge">ETL Pipelines</span>
+            <span class="badge">API Monitoring</span>
+            <span class="badge">Performance Tuning</span>
+            <span class="badge">Git</span>
+            <span class="badge">PowerShell</span>
+            <span class="badge">Linux Automation</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects">
+        <div class="section-header">
+          <h2>Key Projects</h2>
+          <p>A selection of projects across 9+ years of experience.</p>
+          <div class="bar"></div>
+        </div>
+        <div class="project-grid">
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">6 months</span>
+              </div>
+              <h3 data-testid="text-project-1">HRMS Platform</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">MSSQL</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Built ASP.NET MVC modules using C#, JavaScript, and MSSQL to manage employee data, attendance, and reporting.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">6 months</span>
+              </div>
+              <h3 data-testid="text-project-2">Aspose Document Converter</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">Aspose</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Developed C# console applications for automated document conversion using Aspose libraries.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">1 year</span>
+              </div>
+              <h3 data-testid="text-project-3">Positive Equity System</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">ASP.NET MVC</span>
+                <span class="tech-tag">C#</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Delivered MVC-based financial application handling data processing, validation, and reporting.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">1 year</span>
+              </div>
+              <h3 data-testid="text-project-4">Vet Australia</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">ASP.NET Web API</span>
+                <span class="tech-tag">C#</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Developed and maintained ASP.NET Web API services supporting veterinary monitoring and operational workflows.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">1 year</span>
+              </div>
+              <h3 data-testid="text-project-5">Proagrica</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">Web API</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Built backend APIs using C# and Web API for agribusiness platforms, ensuring data accuracy and reliability.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">1 year</span>
+              </div>
+              <h3 data-testid="text-project-6">Evi View – ETL Platform</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">ETL</span>
+                <span class="tech-tag">SQL</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Designed and implemented ETL APIs in C# to ingest data from APIs and Excel sources into relational databases for analytics.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+                <span class="duration-badge">1 year</span>
+              </div>
+              <h3 data-testid="text-project-7">SFC – IVR & AI Automation</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">AI</span>
+                <span class="tech-tag">IVR</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Supported backend integration for IVR-based call automation and AI-driven workflows.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+              </div>
+              <h3 data-testid="text-project-8">Supplier Gateway</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">Node.js</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Developed Node.js services for intelligent document ingestion and retrieval.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+              </div>
+              <h3 data-testid="text-project-9">KeyHouse</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">AI</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Built Python-based backend services for AI-driven document processing and search.</p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-header">
+              <div class="top-row">
+                <div class="project-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/></svg>
+                </div>
+              </div>
+              <h3 data-testid="text-project-10">Database Migration Utilities</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">MSSQL</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <p>Developed Python tools to migrate data between PostgreSQL and MSSQL with validation and reconciliation.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact">
+        <div class="section-header">
+          <h2>Get in Touch</h2>
+          <p>Have a question or want to work together?</p>
+          <div class="bar"></div>
+        </div>
+        <div class="contact-card">
+          <h3>Contact Info</h3>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <p class="label">Email</p>
+              <a href="mailto:aravindiaar@gmail.com" data-testid="link-email">aravindiaar@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <p class="label">Location</p>
+              <p class="value" data-testid="text-location">Hamilton, New Zealand</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <p class="label">LinkedIn</p>
+              <a href="https://www.linkedin.com/in/aravindiaar/" target="_blank" rel="noopener noreferrer" data-testid="link-linkedin-contact">linkedin.com/in/aravindiaar</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            </div>
+            <div>
+              <p class="label">GitHub</p>
+              <a href="https://github.com/aravindiaar" target="_blank" rel="noopener noreferrer" data-testid="link-github-contact">github.com/aravindiaar</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            </div>
+            <div>
+              <p class="label">NuGet</p>
+              <a href="https://www.nuget.org/profiles/Aravindiaar" target="_blank" rel="noopener noreferrer" data-testid="link-nuget-contact">nuget.org/profiles/Aravindiaar</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobileOverlay').classList.toggle('active');
+      document.getElementById('mobileNav').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
