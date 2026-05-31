@@ -84,6 +84,19 @@
     .sidebar-footer { padding: 0 1.5rem; margin-top: auto; }
     .sidebar-footer p { font-size: 0.75rem; color: var(--muted); }
 
+    .cv-btn {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 0 1rem 0.5rem;
+      padding: 0.75rem 1rem; border-radius: var(--radius);
+      font-size: 0.875rem; font-weight: 600;
+      color: var(--primary-fg);
+      background: var(--primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cv-btn:hover { opacity: 0.88; }
+    .cv-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
     /* Mobile header */
     .mobile-header {
       display: none;
@@ -365,6 +378,10 @@
         <span>Contact</span>
       </a>
     </nav>
+    <a href="Aravind_CV.docx" download class="cv-btn" data-testid="link-download-cv">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+      <span>Download CV</span>
+    </a>
     <div class="sidebar-footer">
       <p>&copy; 2026 Aravind Anbalagan.<br>All rights reserved.</p>
     </div>
@@ -411,6 +428,10 @@
         <span>Contact</span>
       </a>
     </nav>
+    <a href="Aravind_CV.docx" download class="cv-btn" data-testid="link-download-cv-mobile">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+      <span>Download CV</span>
+    </a>
     <div class="sidebar-footer">
       <p>&copy; 2026 Aravind Anbalagan.<br>All rights reserved.</p>
     </div>
